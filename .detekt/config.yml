@@ -1,0 +1,165 @@
+customRules:
+    active: true
+    DependencyRule:
+        active: true
+    ConstructorRule:
+        active: true
+
+config:
+    excludes: "customRules.*,customRules>.*>.*"
+
+style:
+    MaxLineLength:
+        maxLineLength: 150 # Custom size to match the one in .editorconfig
+    LoopWithTooManyJumpStatements:
+        maxJumpCount: 3 # Only allowing 1 is too strict
+    ReturnCount:
+        active: true
+        max: 3 # The original of 2 is too strict here
+        excludedFunctions: ['equals']
+        excludeLabeled: true # Exclude labeled returns
+        excludeReturnFromLambda: true
+        excludeGuardClauses: true # Exclude null guards
+    BracesOnIfStatements:
+        active: true # Too hard to read without braces
+    MandatoryBracesLoops:
+        active: true # Too hard to read without braces
+    UnnecessaryApply:
+        active: true # Let's make things easier to read
+    VarCouldBeVal:
+        active: true # Let's make things easier to read
+    UnnecessaryLet:
+        active: true # Let's make things easier to read
+    ForbiddenComment:
+        active: false
+    NewLineAtEndOfFile:
+        active: false
+    ExplicitItLambdaParameter:
+        active: false
+    DataClassShouldBeImmutable:
+        active: false
+
+complexity:
+    TooManyFunctions: # The default limit to functions is 3. This is too little
+        thresholdInFiles: 50
+        thresholdInClasses: 50
+        thresholdInInterfaces: 100
+        thresholdInObjects: 50
+        thresholdInEnums: 50
+        ignoreDeprecated: true # Deprecated will be removed soon anyways
+        ignoreOverridden: true # Useful for Android Activities and Fragments where there are a lot of overrides
+    LongParameterList: # The default limit to constructors is 6. This is too little
+        constructorThreshold: 20
+        functionThreshold: 20
+    LongMethod:
+        active: true
+        threshold: 100
+
+exceptions:
+    TooGenericExceptionCaught:
+        active: false # There are befits to force the usage of only specific errors. But this totally disallows defencive programming on mobile devices. As bug fixes are difficult to publish for mobile then we will allow it.
+
+comments:
+    active: false
+
+formatting:
+    active: true
+    android: true
+    autoCorrect: true
+    AnnotationOnSeparateLine:
+        active: true
+        autoCorrect: true
+    ChainWrapping:
+        active: true
+        autoCorrect: true
+    CommentSpacing:
+        active: true
+        autoCorrect: true
+    Filename:
+        active: true
+    FinalNewline:
+        active: false
+        autoCorrect: false
+    ImportOrdering:
+        active: true
+        autoCorrect: true
+    Indentation:
+        active: true
+        autoCorrect: true
+        indentSize: 4
+        continuationIndentSize: 4
+    MaximumLineLength:
+        active: true
+        maxLineLength: 150
+    ModifierOrdering:
+        active: true
+        autoCorrect: true
+    MultiLineIfElse:
+        active: true
+        autoCorrect: true
+    NoBlankLineBeforeRbrace:
+        active: true
+        autoCorrect: true
+    NoConsecutiveBlankLines:
+        active: true
+        autoCorrect: true
+    NoEmptyClassBody:
+        active: true
+        autoCorrect: true
+    NoLineBreakAfterElse:
+        active: true
+        autoCorrect: true
+    NoLineBreakBeforeAssignment:
+        active: true
+        autoCorrect: true
+    NoMultipleSpaces:
+        active: true
+        autoCorrect: true
+    NoSemicolons:
+        active: true
+        autoCorrect: true
+    NoTrailingSpaces:
+        active: true
+        autoCorrect: true
+    NoUnitReturn:
+        active: true
+        autoCorrect: true
+    NoUnusedImports:
+        active: true
+        autoCorrect: true
+    NoWildcardImports:
+        active: true
+    PackageName:
+        active: true
+        autoCorrect: true
+    ParameterListWrapping:
+        active: true
+        autoCorrect: true
+        indentSize: 4
+    SpacingAroundColon:
+        active: true
+        autoCorrect: true
+    SpacingAroundComma:
+        active: true
+        autoCorrect: true
+    SpacingAroundCurly:
+        active: true
+        autoCorrect: true
+    SpacingAroundDot:
+        active: true
+        autoCorrect: true
+    SpacingAroundKeyword:
+        active: true
+        autoCorrect: true
+    SpacingAroundOperators:
+        active: true
+        autoCorrect: true
+    SpacingAroundParens:
+        active: true
+        autoCorrect: true
+    SpacingAroundRangeOperator:
+        active: true
+        autoCorrect: true
+    StringTemplate:
+        active: true
+        autoCorrect: true

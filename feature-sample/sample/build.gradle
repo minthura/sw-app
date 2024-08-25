@@ -1,0 +1,7 @@
+plugins {
+    alias(libs.plugins.codex.feature.plugin)
+}
+
+dependencies {
+    implementation project(':feature-sample:sampleKit')
+}

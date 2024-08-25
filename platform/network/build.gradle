@@ -1,0 +1,11 @@
+plugins {
+    alias(libs.plugins.codex.platform.plugin)
+}
+
+dependencies {
+    implementation libs.retrofit
+    implementation libs.logging.interceptor
+    implementation libs.retrofit.gson
+    implementation project(':platform:component')
+    implementation project(':platform:networkKit')
+}

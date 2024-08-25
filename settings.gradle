@@ -1,0 +1,33 @@
+pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "$rootDir/build-logic/repo" }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "SWPro"
+include ':app'
+include ':coreAppSdk'
+include ':build-logic:gradle-plugin'
+include ':platform:network'
+include ':platform:networkKit'
+include ':feature-sample:sample'
+include ':feature-sample:sampleKit'
+include ':platform:component'
+include ':feature-navigation:navigation'
+include ':feature-navigation:navigationKit'

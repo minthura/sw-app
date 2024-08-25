@@ -1,0 +1,112 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.jvm.JvmTargetValidationMode
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import io.gitlab.arturbosch.detekt.Detekt
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.jetbrains.kotlin.android) apply false
+    alias(libs.plugins.jetbrains.kotlin.kapt) apply false
+    alias(libs.plugins.navigation.safeargs.kotlin) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+    alias(libs.plugins.codex.feature.plugin) apply false
+    alias(libs.plugins.codex.bridge.plugin) apply false
+    alias(libs.plugins.codex.platform.plugin) apply false
+    alias(libs.plugins.detekt.plugin) apply true
+}
+
+subprojects {
+    tasks.withType(KotlinCompile).configureEach {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        jvmTargetValidationMode = JvmTargetValidationMode.IGNORE
+    }
+    project.plugins.whenPluginAdded { plugin ->
+        if ("com.android.build.gradle.AppPlugin" == plugin.class.name || "com.android.build.gradle.LibraryPlugin" == plugin.class.name) {
+            println("Plugin name: ${project.name}")
+            project.android {
+                compileSdkVersion 34
+                defaultConfig {
+                    minSdk 24
+                    versionCode 1
+                    versionName "1.0.0"
+                    vectorDrawables.useSupportLibrary = true
+                    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+                }
+                tasks.withType(KotlinJvmCompile).configureEach {
+                    compilerOptions {
+                        jvmTarget.set(JvmTarget.JVM_17)
+                        freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+                    }
+                }
+                tasks.withType(Test).configureEach {
+                    maxParallelForks = Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+                }
+                tasks.withType(Test).configureEach {
+                    forkEvery = 100
+                }
+                testOptions {
+                    unitTests.returnDefaultValues = true
+                }
+                tasks.withType(JavaCompile).configureEach {
+                    options.fork = true
+                }
+                buildTypes {
+                    release {
+                        minifyEnabled false
+                        debuggable false
+                        enableUnitTestCoverage false
+                        signingConfig null
+                    }
+                    debug {
+                        enableUnitTestCoverage true
+                        minifyEnabled false
+                        signingConfig null
+                    }
+                }
+            }
+        }
+    }
+}
+
+def projectSource = file(projectDir)
+def configFile = files("$rootDir/.detekt/config.yml")
+def baselineFile = file("$rootDir/.detekt/baseline.xml")
+def kotlinFiles = "**/*.kt"
+def resourceFiles = "**/resources/**"
+def testFiles = "**/test/**"
+def androidTest = "**/androidTest/**"
+def buildFiles = "**/build/**"
+def excludeFiles = "**/CoreAppNavImpl.kt"
+
+tasks.register("detektAll", Detekt) {
+    def autoFix = project.hasProperty('detektAutoFix')
+    description = "Custom DETEKT build for all modules"
+    parallel = true
+    ignoreFailures = false
+    autoCorrect = autoFix
+    allRules = true
+    buildUponDefaultConfig = true
+    setSource(projectSource)
+    baseline.set(baselineFile)
+    config.setFrom(configFile)
+    include(kotlinFiles)
+    exclude(
+            resourceFiles,
+            buildFiles,
+            testFiles,
+            androidTest,
+            excludeFiles
+    )
+    reports {
+        html.required.set(false)
+        xml.required.set(false)
+        txt.required.set(false)
+    }
+}
+
+dependencies {
+    detektPlugins(libs.detekt.formatting)
+}

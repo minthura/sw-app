@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'java-gradle-plugin'
+    alias(libs.plugins.jetbrains.kotlin.jvm)
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+group = "com.minthuya.gradle.plugin"
+version = "1.1"
+
+gradlePlugin {
+    plugins {
+        create("codexFeatureModulePlugin") {
+            id = "codex-app-module-feature"
+            implementationClass = "com.minthuya.gradle.plugin.FeatureModulePlugin"
+        }
+        create("codexBridgeModulePlugin") {
+            id = "codex-app-module-bridge"
+            implementationClass = "com.minthuya.gradle.plugin.BridgeModulePlugin"
+        }
+        create("codexPlatformModulePlugin") {
+            id = "codex-app-module-platform"
+            implementationClass = "com.minthuya.gradle.plugin.PlatformModulePlugin"
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("$rootDir/build-logic/repo")
+        }
+    }
+}
+
+gradle.taskGraph.whenReady { graph ->
+    publishAllPublicationsToMavenRepository.onlyIf {
+        true
+    }
+}
+
+dependencies {
+    implementation "com.android.tools.build:gradle:8.4.1"
+}

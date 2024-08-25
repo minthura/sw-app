@@ -1,0 +1,8 @@
+plugins {
+    alias(libs.plugins.codex.bridge.plugin)
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.retrofit
+}
