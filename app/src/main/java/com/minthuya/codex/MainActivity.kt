@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DaggerApplicationComponent.factory().create(application).inject(this)
-        coreApp.navigateTo(this, CoreAppNavType.FEATURE_SAMPLE)
+        coreApp.navigateTo(this, CoreAppNavType.FEATURE_SW)
         finish()
     }
 }

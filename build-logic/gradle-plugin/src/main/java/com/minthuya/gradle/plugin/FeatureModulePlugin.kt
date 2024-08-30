@@ -14,7 +14,7 @@ class FeatureModulePlugin : Plugin<Project> {
         /* <------- Apply Plugins ------> */
         project.pluginManager.apply(libs.findPlugin("android.library").get().get().pluginId)
         project.pluginManager.apply(libs.findPlugin("jetbrains.kotlin.android").get().get().pluginId)
-        project.pluginManager.apply(libs.findPlugin("jetbrains.kotlin.kapt").get().get().pluginId)
+        project.pluginManager.apply(libs.findPlugin("kotlin.ksp").get().get().pluginId)
         project.pluginManager.apply(libs.findPlugin("jetbrains.kotlin.parcelize").get().get().pluginId)
         project.pluginManager.apply(libs.findPlugin("navigation.safeargs.kotlin").get().get().pluginId)
         /* <------- Apply Plugins ------> */
@@ -35,7 +35,7 @@ class FeatureModulePlugin : Plugin<Project> {
             val library = libs.findLibrary(it).get()
             when (it) {
                 "dagger2" -> project.dependencies.addProvider("implementation", library)
-                "dagger2.ktx" -> project.dependencies.addProvider("kapt", library)
+                "dagger2.ktx" -> project.dependencies.addProvider("ksp", library)
                 else -> if (!EXCLUDED_LIBRARIES.contains(it) && !it.startsWith(EXCLUDE_PREFIX)) {
                     println("----> Adding dependency: [$it]")
                     project.dependencies.addProvider(
@@ -47,6 +47,9 @@ class FeatureModulePlugin : Plugin<Project> {
         }
         project.dependencies.add("implementation", project.project(":platform:component"))
         project.dependencies.add("implementation", project.project(":platform:networkKit"))
+        project.dependencies.addProvider("implementation", libs.findLibrary("room.runtime").get())
+        project.dependencies.addProvider("annotationProcessor", libs.findLibrary("room.compiler").get())
+        project.dependencies.addProvider("ksp", libs.findLibrary("room.compiler").get())
         project.dependencies.addProvider("testImplementation", libs.findLibrary("junit").get())
         /* <------- Add Dependencies ------> */
     }
@@ -80,7 +83,9 @@ class FeatureModulePlugin : Plugin<Project> {
             "androidx.test.orchestrator",
             "androidx.test.rules",
             "androidx.test.runner",
-            "androidx.test.uiautomator"
+            "androidx.test.uiautomator",
+            "room.compiler",
+            "room.runtime"
         )
     }
 }

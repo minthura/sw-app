@@ -5,4 +5,5 @@ plugins {
 dependencies {
     implementation project(':feature-navigation:navigationKit')
     implementation project(':feature-sample:sampleKit')
+    implementation project(':feature-sw:swKit')
 }

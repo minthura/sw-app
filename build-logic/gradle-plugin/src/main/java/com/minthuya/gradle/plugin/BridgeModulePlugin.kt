@@ -14,6 +14,7 @@ class BridgeModulePlugin : Plugin<Project> {
         /* <------- Apply Plugins ------> */
         project.pluginManager.apply(libs.findPlugin("android.library").get().get().pluginId)
         project.pluginManager.apply(libs.findPlugin("jetbrains.kotlin.android").get().get().pluginId)
+        project.pluginManager.apply(libs.findPlugin("kotlin.ksp").get().get().pluginId)
         /* <------- Apply Plugins ------> */
 
         /* <------- Android Block ------> */

@@ -1,0 +1,89 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "com.minthuya.gradle.plugin",
+    "module": "gradle-plugin",
+    "version": "1.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.6"
+    }
+  },
+  "variants": [
+    {
+      "name": "apiElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-api",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-plugin-1.2.jar",
+          "url": "gradle-plugin-1.2.jar",
+          "size": 10459,
+          "sha512": "1e4fd20b9a6629f6aebde523951331d7f06abf62dc3937fe5ce246ba22aec22c6e30922dcd4543cf2545edda4edbd611c7298cbd863cb823354f75f6dd1974ae",
+          "sha256": "e52b965164ae25548686fac03116a5ba2f08051961ef6bd0fcacc564675b4035",
+          "sha1": "a09df86a3f221eeafad62ecc663877b181e488b5",
+          "md5": "63da87c3e05490d128640812e27be678"
+        }
+      ]
+    },
+    {
+      "name": "runtimeElements",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.jvm.environment": "standard-jvm",
+        "org.gradle.jvm.version": 17,
+        "org.gradle.libraryelements": "jar",
+        "org.gradle.usage": "java-runtime",
+        "org.jetbrains.kotlin.platform.type": "jvm"
+      },
+      "dependencies": [
+        {
+          "group": "com.android.tools.build",
+          "module": "gradle",
+          "version": {
+            "requires": "8.4.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "1.9.24"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "gradle-plugin-1.2.jar",
+          "url": "gradle-plugin-1.2.jar",
+          "size": 10459,
+          "sha512": "1e4fd20b9a6629f6aebde523951331d7f06abf62dc3937fe5ce246ba22aec22c6e30922dcd4543cf2545edda4edbd611c7298cbd863cb823354f75f6dd1974ae",
+          "sha256": "e52b965164ae25548686fac03116a5ba2f08051961ef6bd0fcacc564675b4035",
+          "sha1": "a09df86a3f221eeafad62ecc663877b181e488b5",
+          "md5": "63da87c3e05490d128640812e27be678"
+        }
+      ]
+    }
+  ]
+}

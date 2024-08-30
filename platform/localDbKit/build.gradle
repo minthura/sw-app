@@ -1,0 +1,10 @@
+plugins {
+    alias(libs.plugins.codex.bridge.plugin)
+}
+
+dependencies {
+    implementation libs.androidx.core.ktx
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+    ksp libs.room.compiler
+}

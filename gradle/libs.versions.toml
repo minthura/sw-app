@@ -2,7 +2,7 @@
 agp = "8.4.1"
 detektFormatting = "1.23.3"
 gson = "2.11.0"
-kotlin = "1.9.24"
+kotlin = "2.0.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -14,12 +14,14 @@ material = "1.12.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
 jetbrainsKotlinJvm = "1.9.0"
-codexGradlePlugin = "1.1"
+codexGradlePlugin = "1.2.9"
 dagger = "2.51.1"
 navigation = "2.7.7"
 detekt = "1.23.6"
-okhttp = "4.12.0"
+poi = "5.3.0"
 retrofit = "2.11.0"
+roomdb = "2.6.1"
+ksp = "2.0.20-1.0.24"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,13 +38,18 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 dagger2 = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
 dagger2-ktx = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigation" }
+navigation-fragment = { module = "androidx.navigation:navigation-fragment", version.ref = "navigation" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomdb" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomdb" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -51,4 +58,4 @@ detekt-plugin = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 codex-feature-plugin = { id = "codex-app-module-feature", version.ref = "codexGradlePlugin" }
 codex-bridge-plugin = { id = "codex-app-module-bridge", version.ref = "codexGradlePlugin" }
 codex-platform-plugin = { id = "codex-app-module-platform", version.ref = "codexGradlePlugin" }
-
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

@@ -14,7 +14,7 @@ class PlatformModulePlugin : Plugin<Project> {
         /* <------- Apply Plugins ------> */
         project.pluginManager.apply(libs.findPlugin("android.library").get().get().pluginId)
         project.pluginManager.apply(libs.findPlugin("jetbrains.kotlin.android").get().get().pluginId)
-        project.pluginManager.apply(libs.findPlugin("jetbrains.kotlin.kapt").get().get().pluginId)
+        project.pluginManager.apply(libs.findPlugin("kotlin.ksp").get().get().pluginId)
         /* <------- Apply Plugins ------> */
 
         /* <------- Android Block ------> */
@@ -27,7 +27,7 @@ class PlatformModulePlugin : Plugin<Project> {
 
         /* <------- Add Dependencies ------> */
         project.dependencies.addProvider("implementation", libs.findLibrary("dagger2").get())
-        project.dependencies.addProvider("kapt", libs.findLibrary("dagger2.ktx").get())
+        project.dependencies.addProvider("ksp", libs.findLibrary("dagger2.ktx").get())
         project.dependencies.addProvider("testImplementation", libs.findLibrary("junit").get())
         /* <------- Add Dependencies ------> */
     }

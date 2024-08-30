@@ -7,7 +7,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
-    alias(libs.plugins.jetbrains.kotlin.kapt) apply false
+    alias(libs.plugins.kotlin.ksp) apply false
     alias(libs.plugins.navigation.safeargs.kotlin) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.jetbrains.kotlin.jvm) apply false
@@ -29,7 +29,7 @@ subprojects {
             project.android {
                 compileSdkVersion 34
                 defaultConfig {
-                    minSdk 24
+                    minSdk 26
                     versionCode 1
                     versionName "1.0.0"
                     vectorDrawables.useSupportLibrary = true

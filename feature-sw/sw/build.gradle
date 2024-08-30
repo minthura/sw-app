@@ -1,0 +1,10 @@
+plugins {
+    alias(libs.plugins.codex.feature.plugin)
+}
+
+dependencies {
+    implementation project(':feature-sw:swKit')
+    implementation libs.poi
+    implementation libs.poi.ooxml
+    implementation project(':platform:localDbKit')
+}
