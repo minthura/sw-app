@@ -1,7 +1,8 @@
 package com.minthuya.sw.data.datasource
 
-import com.minthuya.sw.data.dtos.Schedule
+import com.minthuya.localdbkit.entity.Station
 
 interface SWDataSource {
-    suspend fun getShortWaveSchedules(): List<Schedule>
+    suspend fun getShortWaveSchedules(offset: Int, limit: Int, language: String): List<Station>
+    suspend fun getLanguages(): List<String>
 }

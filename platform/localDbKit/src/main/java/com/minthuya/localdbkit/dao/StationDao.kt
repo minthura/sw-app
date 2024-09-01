@@ -8,11 +8,14 @@ import com.minthuya.localdbkit.entity.Station
 
 @Dao
 interface StationDao {
-    @Query("SELECT * FROM stations")
-    fun getAll(): List<Station>
+    @Query("SELECT * FROM stations WHERE language LIKE :language LIMIT :pageSize OFFSET :pageIndex * :pageSize")
+    fun getStations(pageSize: Int, pageIndex: Int, language: String): List<Station>
 
     @Query("SELECT * FROM stations WHERE language LIKE :language")
     fun findByLanguage(language: String): List<Station>
+
+    @Query("SELECT DISTINCT language from stations")
+    fun getLanguages(): List<String>
 
     @Insert
     fun insert(station: Station)

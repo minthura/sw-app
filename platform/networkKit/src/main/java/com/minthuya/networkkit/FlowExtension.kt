@@ -1,8 +1,10 @@
 package com.minthuya.networkkit
 
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
 import java.io.IOException
@@ -19,8 +21,8 @@ suspend fun <T> Flow<T>.execute(success: ((T) -> Unit), error: ((error: Error) -
     }
 }
 
-fun <T> MutableSharedFlow<T>.postEmit(t: T) {
-    runBlocking {
+fun <T> MutableSharedFlow<T>.postEmit(scope: CoroutineScope, t: T) {
+    scope.launch {
         emit(t)
     }
 }

@@ -9,7 +9,7 @@ import java.util.Locale
 class Converters {
     val df = DateTimeFormatterBuilder().apply {
         parseCaseInsensitive()
-        appendPattern("HHmm")
+        appendPattern("HH:mm")
     }.toFormatter(Locale.ENGLISH)
     @TypeConverter
     fun fromTimestamp(value: String?): LocalTime? {

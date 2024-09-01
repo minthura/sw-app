@@ -7,7 +7,18 @@
 
     <fragment
         android:id="@+id/swEntryfragment"
-        android:name="com.minthuya.sw.ui.EntryFragment"
+        android:name="com.minthuya.sw.ui.sync.SyncStationsFragment"
         android:label="sw_entry_fragment"
-        tools:layout="@layout/sw_entry_fragment" />
+        tools:layout="@layout/sw_entry_fragment">
+        <action
+            android:id="@+id/action_entry_fragment_to_list_fragment"
+            app:destination="@id/swStationslistfragment"
+            app:popUpTo="@id/swEntryfragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/swStationslistfragment"
+        android:name="com.minthuya.sw.ui.list.StationsListFragment"
+        android:label="StationsListFragment" />
+
 </navigation>

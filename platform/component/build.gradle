@@ -1,6 +1,15 @@
 plugins {
     alias(libs.plugins.codex.platform.plugin)
 }
+
+android {
+    buildFeatures {
+        viewBinding true
+    }
+}
+
 dependencies {
+    implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.androidx.appcompat
+    implementation libs.material
 }

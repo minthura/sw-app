@@ -22,10 +22,10 @@ class SampleViewModel(
         _uiState.emit(UiResult.Loading())
         getWeatherUseCase.invoke().execute(
             success = {
-                _uiState.postEmit(UiResult.Success(it))
+                _uiState.postEmit(this, UiResult.Success(it))
             },
             error = {
-                _uiState.postEmit(UiResult.Error(it))
+                _uiState.postEmit(this, UiResult.Error(it))
             }
         )
     }

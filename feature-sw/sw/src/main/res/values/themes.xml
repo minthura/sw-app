@@ -1,0 +1,50 @@
+<resources>
+    <style name="SWAppTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/sw_md_theme_primary</item>
+        <item name="colorOnPrimary">@color/sw_md_theme_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/sw_md_theme_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/sw_md_theme_onPrimaryContainer</item>
+        <item name="colorSecondary">@color/sw_md_theme_secondary</item>
+        <item name="colorOnSecondary">@color/sw_md_theme_onSecondary</item>
+        <item name="colorSecondaryContainer">@color/sw_md_theme_secondaryContainer</item>
+        <item name="colorOnSecondaryContainer">@color/sw_md_theme_onSecondaryContainer</item>
+        <item name="colorTertiary">@color/sw_md_theme_tertiary</item>
+        <item name="colorOnTertiary">@color/sw_md_theme_onTertiary</item>
+        <item name="colorTertiaryContainer">@color/sw_md_theme_tertiaryContainer</item>
+        <item name="colorOnTertiaryContainer">@color/sw_md_theme_onTertiaryContainer</item>
+        <item name="colorError">@color/sw_md_theme_error</item>
+        <item name="colorOnError">@color/sw_md_theme_onError</item>
+        <item name="colorErrorContainer">@color/sw_md_theme_errorContainer</item>
+        <item name="colorOnErrorContainer">@color/sw_md_theme_onErrorContainer</item>
+        <item name="android:colorBackground">@color/sw_md_theme_background</item>
+        <item name="colorOnBackground">@color/sw_md_theme_onBackground</item>
+        <item name="colorSurface">@color/sw_md_theme_surface</item>
+        <item name="colorOnSurface">@color/sw_md_theme_onSurface</item>
+        <item name="colorSurfaceVariant">@color/sw_md_theme_surfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/sw_md_theme_onSurfaceVariant</item>
+        <item name="colorOutline">@color/sw_md_theme_outline</item>
+        <item name="colorOutlineVariant">@color/sw_md_theme_outlineVariant</item>
+        <item name="colorSurfaceInverse">@color/sw_md_theme_inverseSurface</item>
+        <item name="colorOnSurfaceInverse">@color/sw_md_theme_inverseOnSurface</item>
+        <item name="colorPrimaryInverse">@color/sw_md_theme_inversePrimary</item>
+        <item name="colorPrimaryFixed">@color/sw_md_theme_primaryFixed</item>
+        <item name="colorOnPrimaryFixed">@color/sw_md_theme_onPrimaryFixed</item>
+        <item name="colorPrimaryFixedDim">@color/sw_md_theme_primaryFixedDim</item>
+        <item name="colorOnPrimaryFixedVariant">@color/sw_md_theme_onPrimaryFixedVariant</item>
+        <item name="colorSecondaryFixed">@color/sw_md_theme_secondaryFixed</item>
+        <item name="colorOnSecondaryFixed">@color/sw_md_theme_onSecondaryFixed</item>
+        <item name="colorSecondaryFixedDim">@color/sw_md_theme_secondaryFixedDim</item>
+        <item name="colorOnSecondaryFixedVariant">@color/sw_md_theme_onSecondaryFixedVariant</item>
+        <item name="colorTertiaryFixed">@color/sw_md_theme_tertiaryFixed</item>
+        <item name="colorOnTertiaryFixed">@color/sw_md_theme_onTertiaryFixed</item>
+        <item name="colorTertiaryFixedDim">@color/sw_md_theme_tertiaryFixedDim</item>
+        <item name="colorOnTertiaryFixedVariant">@color/sw_md_theme_onTertiaryFixedVariant</item>
+        <item name="colorSurfaceDim">@color/sw_md_theme_surfaceDim</item>
+        <item name="colorSurfaceBright">@color/sw_md_theme_surfaceBright</item>
+        <item name="colorSurfaceContainerLowest">@color/sw_md_theme_surfaceContainerLowest</item>
+        <item name="colorSurfaceContainerLow">@color/sw_md_theme_surfaceContainerLow</item>
+        <item name="colorSurfaceContainer">@color/sw_md_theme_surfaceContainer</item>
+        <item name="colorSurfaceContainerHigh">@color/sw_md_theme_surfaceContainerHigh</item>
+        <item name="colorSurfaceContainerHighest">@color/sw_md_theme_surfaceContainerHighest</item>
+    </style>
+</resources>

@@ -3,6 +3,7 @@ package com.minthuya.sw.data.service.impl
 import android.content.Context
 import com.minthuya.localdbkit.LocalDbKit
 import com.minthuya.localdbkit.entity.Station
+import com.minthuya.sw.data.model.SyncResult
 import com.minthuya.sw.data.service.SyncStationsService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -26,11 +27,12 @@ class SyncStationsServiceImpl(
         appendPattern("HHmm")
     }.toFormatter(Locale.ENGLISH)
 
-    override fun read(): Flow<Double> =
+    override fun sync(force: Boolean): Flow<SyncResult> =
         flow {
+            emit(SyncResult.Loading())
             val db = localDbKit.getDb()
-            if (db.stationDao().stationsCount() > 0) {
-                emit(100.0)
+            if (db.stationDao().stationsCount() > 0 && !force) {
+                emit(SyncResult.Success())
                 return@flow
             }
             context.assets.open("nxa24.xlsx").use {
@@ -65,10 +67,10 @@ class SyncStationsServiceImpl(
                             )
                         )
                         val percent = (index.inc().toDouble() / total.toDouble()) * 100
-                        emit(percent)
+                        emit(SyncResult.Loading(percent))
                     }
                 }
             }
-            emit(100.0)
+            emit(SyncResult.Success())
         }.flowOn(scope)
 }
