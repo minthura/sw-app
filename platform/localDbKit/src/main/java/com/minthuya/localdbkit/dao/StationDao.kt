@@ -8,8 +8,8 @@ import com.minthuya.localdbkit.entity.Station
 
 @Dao
 interface StationDao {
-    @Query("SELECT * FROM stations WHERE language LIKE :language LIMIT :pageSize OFFSET :pageIndex * :pageSize")
-    fun getStations(pageSize: Int, pageIndex: Int, language: String): List<Station>
+    @Query("SELECT * FROM stations WHERE language LIKE :language AND (:station IS NULL OR name = :station) LIMIT :pageSize OFFSET :pageIndex * :pageSize")
+    fun getStations(pageSize: Int, pageIndex: Int, language: String, station: String?): List<Station>
 
     @Query("SELECT * FROM stations WHERE language LIKE :language")
     fun findByLanguage(language: String): List<Station>

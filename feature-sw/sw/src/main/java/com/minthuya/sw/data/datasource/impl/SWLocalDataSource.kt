@@ -7,8 +7,8 @@ import com.minthuya.sw.data.datasource.SWDataSource
 class SWLocalDataSource(
     private val stationDao: StationDao
 ): SWDataSource {
-    override suspend fun getShortWaveSchedules(offset: Int, limit: Int, language: String): List<Station> =
-        stationDao.getStations(limit, offset, language)
+    override suspend fun getShortWaveSchedules(offset: Int, limit: Int, language: String, station: String?): List<Station> =
+        stationDao.getStations(limit, offset, language, station)
 
     override suspend fun getLanguages(): List<String> =
         stationDao.getLanguages()

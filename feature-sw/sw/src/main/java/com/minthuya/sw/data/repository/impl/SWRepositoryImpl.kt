@@ -13,9 +13,9 @@ class SWRepositoryImpl(
     private val swDataSource: SWDataSource,
     private val scope: CoroutineDispatcher = Dispatchers.IO
 ): SWRepository {
-    override fun getStations(offset: Int, limit: Int, language: String): Flow<List<Station>> {
+    override fun getStations(offset: Int, limit: Int, language: String, station: String?): Flow<List<Station>> {
         return flow {
-            emit(swDataSource.getShortWaveSchedules(offset, limit, language))
+            emit(swDataSource.getShortWaveSchedules(offset, limit, language, station))
         }.flowOn(scope)
     }
 

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.minthuya.localdbkit.entity.Station
 import com.minthuya.sw.R
+import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.databinding.SwStationListItemBinding
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -29,16 +30,15 @@ class StationsAdapter(
         appendPattern("h:mm a")
     }.toFormatter(Locale.ENGLISH)
 
-    private val stations = mutableListOf<Station>()
+    private val stations = mutableListOf<RadioStation>()
 
     inner class StationViewHolder(
         private val binding: SwStationListItemBinding
     ): ViewHolder(binding.root) {
-        fun bind(station: Station) {
+        fun bind(station: RadioStation) {
             binding.swTitle.text = station.name
-            val from = convertUtcToLocalTime(station.startTime)
-            val to = convertUtcToLocalTime(station.endTime)
-
+            val from = station.startTime
+            val to = station.endTime
             binding.swSubtitle.text = buildString {
                 append(station.frequency)
                 appendLine(" kHz")
@@ -51,39 +51,12 @@ class StationsAdapter(
             }
             binding.statusView.background = ContextCompat.getDrawable(
                 binding.root.context,
-                if (isCurrentTimeBetween(from, to)) {
+                if (station.isLiveNow) {
                     R.drawable.sw_online
                 } else {
                     R.drawable.sw_offline
                 }
             )
-        }
-        private fun isCurrentTimeBetween(startTime: LocalTime, endTime: LocalTime): Boolean {
-            val currentTime = LocalTime.now()
-
-            return if (startTime.isBefore(endTime)) {
-                // Normal range, e.g., 09:00 - 17:00
-                currentTime.isAfter(startTime) && currentTime.isBefore(endTime)
-            } else {
-                // Overlapping range, e.g., 22:00 - 06:00 (spans midnight)
-                currentTime.isAfter(startTime) || currentTime.isBefore(endTime)
-            }
-        }
-        private fun convertUtcToLocalTime(utcTime: LocalTime): LocalTime {
-            // Assume a fixed date since LocalTime only represents time, not date.
-            val fixedDate = LocalDate.now()  // You can also use any specific date if needed.
-
-            // Create a LocalDateTime by combining the fixed date and utcTime.
-            val utcDateTime = LocalDateTime.of(fixedDate, utcTime)
-
-            // Convert LocalDateTime to ZonedDateTime in UTC time zone.
-            val utcZonedDateTime = utcDateTime.atZone(ZoneId.of("UTC"))
-
-            // Convert the ZonedDateTime from UTC to the system default time zone.
-            val localZonedDateTime = utcZonedDateTime.withZoneSameInstant(ZoneId.systemDefault())
-
-            // Extract the LocalTime part from the local ZonedDateTime.
-            return localZonedDateTime.toLocalTime()
         }
     }
 
@@ -94,7 +67,7 @@ class StationsAdapter(
         notifyItemRangeRemoved(0, size)
     }
 
-    fun addStations(data: List<Station>) {
+    fun addStations(data: List<RadioStation>) {
         val size = stations.size
         stations.addAll(data)
         notifyItemRangeInserted(size, data.size)

@@ -1,7 +1,116 @@
 <resources>
-    <string-array name="sw_language">
-        <item>English</item>
-        <item>Burmese</item>
-        <item>Indonesian</item>
+    <string-array name="sw_radio_stations">
+        <item>Any Station</item>
+        <item>AIR</item>
+        <item>Adventist World R.</item>
+        <item>All India Radio</item>
+        <item>BBC</item>
+        <item>Bhutan BS</item>
+        <item>Bible Voice</item>
+        <item>CNR</item>
+        <item>China Radio International</item>
+        <item>Cuban Spy Numbers</item>
+        <item>Deutsche Welle</item>
+        <item>ECHO OF HOPE</item>
+        <item>Echo of Unification</item>
+        <item>Ernest</item>
+        <item>FEBA Radio</item>
+        <item>FEBC Radio</item>
+        <item>Follow The Bible Ministries</item>
+        <item>From the Isle of Music</item>
+        <item>Fu Hsing BS</item>
+        <item>Furusato no kaze</item>
+        <item>HCJB</item>
+        <item>Hamburger Lokalradio</item>
+        <item>Hope Radio</item>
+        <item>IBRA Media</item>
+        <item>KBS World Radio</item>
+        <item>KCBS</item>
+        <item>KNLS</item>
+        <item>KSDA</item>
+        <item>KTWR</item>
+        <item>Kyrgyz Radio</item>
+        <item>MASHAAL Radio</item>
+        <item>Mighty KBC Radio</item>
+        <item>Myanmar Radio</item>
+        <item>NHK World</item>
+        <item>Nippon no Kaze</item>
+        <item>PBS</item>
+        <item>Pyongyang BS</item>
+        <item>R.Algerienne</item>
+        <item>R.Azadi</item>
+        <item>R.Bangladesh Betar</item>
+        <item>R.Ethiopia</item>
+        <item>R.Exterior De Espana</item>
+        <item>R.Fana</item>
+        <item>R.Farda</item>
+        <item>R.France Int.</item>
+        <item>R.Free Asia</item>
+        <item>R.Habana Cuba</item>
+        <item>R.Kuwait</item>
+        <item>R.Liberty</item>
+        <item>R.Marti</item>
+        <item>R.New Zealand Int.</item>
+        <item>R.Pilipinas</item>
+        <item>R.Romania Int.</item>
+        <item>R.Saudi</item>
+        <item>R.Saudi International</item>
+        <item>R.Slovakia International</item>
+        <item>R.Taiwan Int.</item>
+        <item>R.Thailand</item>
+        <item>R.Vanuatu</item>
+        <item>RFE</item>
+        <item>Radio Amhara</item>
+        <item>Radio Belarus</item>
+        <item>Radio Channel</item>
+        <item>Radio Dabanga</item>
+        <item>Radio Darc</item>
+        <item>Radio Ibrahim</item>
+        <item>Radio Ndarason International</item>
+        <item>Radio Nikkei</item>
+        <item>Radio Nug</item>
+        <item>Radio Ohne Namen</item>
+        <item>Radio Oromiya</item>
+        <item>Radio Prage</item>
+        <item>Radio Tamazuj</item>
+        <item>Radio Verdad</item>
+        <item>Radyo Denge Welat</item>
+        <item>SOH</item>
+        <item>Scandinav.Weekend R.</item>
+        <item>Sri Lanka BC</item>
+        <item>TWR</item>
+        <item>Tajik Radio</item>
+        <item>Thazin Radio</item>
+        <item>The Overcomer Ministry</item>
+        <item>VO Beibu Bay Radio</item>
+        <item>VO Dem.alliance</item>
+        <item>VO Islamic Rep.Iran</item>
+        <item>VO Tigray Revolution</item>
+        <item>VOA Deewa Radio</item>
+        <item>VOA Radio Ashna</item>
+        <item>Vatican Radio</item>
+        <item>VO Broad Masses</item>
+        <item>Voice of America</item>
+        <item>Voice of Hope Africa</item>
+        <item>Voice of Indonesia</item>
+        <item>Voice of Korea</item>
+        <item>Voice of Mongolia</item>
+        <item>Voice of Nigeria</item>
+        <item>Voice of Strait</item>
+        <item>Voice of Tajik</item>
+        <item>Voice of The People</item>
+        <item>Voice of Tibet</item>
+        <item>Voice of Turkey</item>
+        <item>Voice of Vietnam</item>
+        <item>WBCQ</item>
+        <item>WEWN</item>
+        <item>WHRI</item>
+        <item>WINB</item>
+        <item>WRMI</item>
+        <item>WTWW</item>
+        <item>WWCR</item>
+        <item>WWV</item>
+        <item>WWVH</item>
+        <item>XingXing</item>
     </string-array>
 </resources>

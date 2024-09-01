@@ -6,6 +6,7 @@ import com.minthuya.localdbkit.entity.Station
 import com.minthuya.networkkit.UiResult
 import com.minthuya.networkkit.execute
 import com.minthuya.networkkit.postEmit
+import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCase
 import com.minthuya.sw.domain.usecase.GetSWStationsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,7 @@ class StationsListViewModel(
     private val getSWLanguagesUseCase: GetSWLanguagesUseCase
 ): BaseViewModel() {
 
-    private val _uiState = MutableStateFlow<UiResult<List<Station>>>(UiResult.Loading())
+    private val _uiState = MutableStateFlow<UiResult<List<RadioStation>>>(UiResult.Loading())
     val uiState = _uiState.asStateFlow()
 
     private val _languagesState = MutableStateFlow<UiResult<List<String>>>(UiResult.Loading())
@@ -35,9 +36,10 @@ class StationsListViewModel(
         )
     }
 
-    fun getStations(offset: Int, language: String) = viewModelScope.launch {
+    fun getStations(offset: Int, language: String, station: String, isLiveNow: Boolean) = viewModelScope.launch {
         _uiState.emit(UiResult.Loading())
-        getSWStationsUseCase(offset = offset, language = language).execute(
+        val st = station.takeIf { it != "Any Station" }
+        getSWStationsUseCase(offset = offset, language = language, station = st, isLiveNow = isLiveNow).execute(
             success = {
                 _uiState.postEmit(this, UiResult.Success(it))
             },
