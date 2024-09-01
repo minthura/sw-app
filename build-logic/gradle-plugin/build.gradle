@@ -1,3 +1,5 @@
+import java.security.MessageDigest
+
 plugins {
     id 'java-library'
     id 'maven-publish'
@@ -40,7 +42,29 @@ publishing {
 
 gradle.taskGraph.whenReady { graph ->
     publishAllPublicationsToMavenRepository.onlyIf {
-        true
+        def libsFile = new File("$rootDir/gradle/libs.versions.toml")
+        def libsChecksumFile = new File("$rootDir/gradle/libs.versions.toml.md5")
+        def digest = MessageDigest.getInstance("MD5")
+        libsFile.each { digest.update(it.bytes) }
+        def currentChecksum = digest.digest().encodeHex().toString()
+        def oldChecksum = ""
+        if (!libsChecksumFile.exists()) {
+            libsChecksumFile.createNewFile()
+        }
+        libsChecksumFile.withReader { oldChecksum = it.readLine() }
+        println("Current libs.version.tomls's MD5 is $currentChecksum")
+        println("Old libs.version.toml's MD5 is $oldChecksum")
+        def needToPublish = oldChecksum != currentChecksum
+        if (needToPublish) {
+            println("----> Publish the plugin")
+            libsChecksumFile.withWriter {
+                it.writeLine(currentChecksum)
+                it.close()
+            }
+        } else {
+            println("----> No need to publish the plugin")
+        }
+        needToPublish
     }
 }
 
