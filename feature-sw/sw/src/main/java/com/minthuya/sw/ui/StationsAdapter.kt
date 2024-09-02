@@ -11,6 +11,7 @@ import com.minthuya.localdbkit.entity.Station
 import com.minthuya.sw.R
 import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.databinding.SwStationListItemBinding
+import com.minthuya.sw.util.admToCountryMap
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -42,11 +43,16 @@ class StationsAdapter(
             binding.swSubtitle.text = buildString {
                 append(station.frequency)
                 appendLine(" kHz")
-                append("Live ")
+                append("Broadcasting ")
                 if (from == to) {
-                    append("all day")
+                    appendLine("all day")
                 } else {
-                    append("from ${from.format(df)} to ${to.format(df)}")
+                    appendLine("from ${from.format(df)} to ${to.format(df)}")
+                }
+                append(station.location)
+                admToCountryMap[station.adm]?.let {
+                    append(", ")
+                    append(admToCountryMap[station.adm])
                 }
             }
             binding.statusView.background = ContextCompat.getDrawable(
@@ -56,6 +62,16 @@ class StationsAdapter(
                 } else {
                     R.drawable.sw_offline
                 }
+            )
+            binding.prefixImageview.setImageDrawable(
+                ContextCompat.getDrawable(
+                    binding.root.context,
+                    if (station.isLiveNow) {
+                        R.drawable.sw_signal_on
+                    } else {
+                        R.drawable.sw_signal_off
+                    }
+                )
             )
         }
     }

@@ -1,21 +1,18 @@
 package com.minthuya.sw.ui.sync
 
-import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.minthuya.component.base.BaseFragment
 import com.minthuya.component.parent
-import com.minthuya.networkkit.UiResult
+import com.minthuya.sw.SWListener
 import com.minthuya.sw.data.model.SyncResult
 import com.minthuya.sw.data.service.SyncStationsService
 import com.minthuya.sw.databinding.SwEntryFragmentBinding
 import com.minthuya.sw.di.DaggerSWComponent
 import com.minthuya.sw.navigator.SWInternalNavigator
-import com.minthuya.sw.ui.StationsAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,6 +20,8 @@ import javax.inject.Inject
 class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
     SwEntryFragmentBinding::inflate
 ) {
+
+    private var listener: SWListener? = null
 
     @Inject
     lateinit var syncStationsService: SyncStationsService
@@ -40,6 +39,17 @@ class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
             findNavController(),
             requireContext().parent()
         ).inject(this)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as? SWListener
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener?.setTopNavBarVisibility(true)
+        listener = null
     }
 
     override fun setupObservers() {
@@ -65,6 +75,10 @@ class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
                 }
             }
         }
+    }
+
+    override fun setupView() {
+        listener?.setTopNavBarVisibility(false)
     }
 
     override fun onViewCreated() {
