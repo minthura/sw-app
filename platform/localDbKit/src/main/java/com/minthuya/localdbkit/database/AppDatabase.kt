@@ -11,5 +11,4 @@ import com.minthuya.localdbkit.entity.Station
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun stationDao(): StationDao
-
 }

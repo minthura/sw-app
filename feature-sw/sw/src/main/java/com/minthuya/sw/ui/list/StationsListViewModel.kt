@@ -2,7 +2,6 @@ package com.minthuya.sw.ui.list
 
 import androidx.lifecycle.viewModelScope
 import com.minthuya.component.viewmodel.BaseViewModel
-import com.minthuya.localdbkit.entity.Station
 import com.minthuya.networkkit.UiResult
 import com.minthuya.networkkit.execute
 import com.minthuya.networkkit.postEmit
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 class StationsListViewModel(
     private val getSWStationsUseCase: GetSWStationsUseCase,
     private val getSWLanguagesUseCase: GetSWLanguagesUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow<UiResult<List<RadioStation>>>(UiResult.Loading())
     val uiState = _uiState.asStateFlow()

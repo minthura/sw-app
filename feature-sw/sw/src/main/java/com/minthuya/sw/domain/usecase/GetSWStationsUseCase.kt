@@ -1,6 +1,5 @@
 package com.minthuya.sw.domain.usecase
 
-import com.minthuya.localdbkit.entity.Station
 import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.data.repository.SWRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,12 +10,18 @@ import java.time.LocalTime
 import java.time.ZoneId
 
 interface GetSWStationsUseCase {
-    operator fun invoke(offset: Int, limit: Int = 30, language: String, station: String?, isLiveNow: Boolean): Flow<List<RadioStation>>
+    operator fun invoke(
+        offset: Int,
+        limit: Int = 30,
+        language: String,
+        station: String?,
+        isLiveNow: Boolean
+    ): Flow<List<RadioStation>>
 }
 
 class GetSWStationsUseCaseImpl(
     private val swRepository: SWRepository
-): GetSWStationsUseCase {
+) : GetSWStationsUseCase {
     override fun invoke(
         offset: Int,
         limit: Int,
@@ -63,7 +68,7 @@ class GetSWStationsUseCaseImpl(
 
     private fun convertUtcToLocalTime(utcTime: LocalTime): LocalTime {
         // Assume a fixed date since LocalTime only represents time, not date.
-        val fixedDate = LocalDate.now()  // You can also use any specific date if needed.
+        val fixedDate = LocalDate.now() // You can also use any specific date if needed.
 
         // Create a LocalDateTime by combining the fixed date and utcTime.
         val utcDateTime = LocalDateTime.of(fixedDate, utcTime)
@@ -77,5 +82,4 @@ class GetSWStationsUseCaseImpl(
         // Extract the LocalTime part from the local ZonedDateTime.
         return localZonedDateTime.toLocalTime()
     }
-
 }

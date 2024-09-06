@@ -9,7 +9,7 @@ interface SWInternalNavigator {
 
 class SWInternalNavigatorImpl(
     private val navController: NavController
-): SWInternalNavigator {
+) : SWInternalNavigator {
     override fun navigateToListScreen() {
         navController.navigate(R.id.action_entry_fragment_to_list_fragment)
     }

@@ -30,7 +30,7 @@ val admToCountryMap = mapOf(
     "AUS" to "Australia",
     "BHR" to "Bahrain",
     "KGZ" to "Kyrgyzstan",
-    "KRE" to "South Korea",  // Double-check context for differentiation
+    "KRE" to "South Korea", // Double-check context for differentiation
     "TJK" to "Tajikistan",
     "TUN" to "Tunisia",
     "CZE" to "Czech Republic",
@@ -65,7 +65,7 @@ val admToCountryMap = mapOf(
     "CAN" to "Canada",
     "IRL" to "Ireland",
     "VUT" to "Vanuatu",
-    "D" to "Germany",  // Alternative code for Germany
+    "D" to "Germany", // Alternative code for Germany
     "GTM" to "Guatemala",
     "UGA" to "Uganda",
     "PRU" to "Peru",
@@ -76,7 +76,7 @@ val admToCountryMap = mapOf(
     "MDG" to "Madagascar",
     "HND" to "Honduras",
     "SLM" to "Solomon Islands",
-    "BEL" to "Belgium",  // Alternative code for Belgium
+    "BEL" to "Belgium", // Alternative code for Belgium
     "UZB" to "Uzbekistan",
     "MRA" to "Mauritania",
     "CLM" to "Colombia",

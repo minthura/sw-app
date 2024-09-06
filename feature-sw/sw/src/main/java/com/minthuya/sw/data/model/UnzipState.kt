@@ -2,7 +2,7 @@ package com.minthuya.sw.data.model
 
 import java.io.File
 
-sealed class UnzipState(directory: File? = null) {
+sealed class UnzipState {
     class Unzipping(val progress: Double) : UnzipState()
-    class Finished(val dir: File) : UnzipState(dir)
+    class Finished(val dir: File) : UnzipState()
 }

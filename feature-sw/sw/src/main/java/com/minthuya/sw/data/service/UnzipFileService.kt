@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 import java.io.File
 
 interface UnzipFileService {
-    fun unzipFile(zipFile: File): Flow<UnzipState>
+    operator fun invoke(zipFile: File): Flow<UnzipState>
 }

@@ -7,7 +7,7 @@ import com.minthuya.localdbkit.database.AppDatabase
 
 class LocalDbKitImpl(
     private val context: Context
-): LocalDbKit {
+) : LocalDbKit {
     override fun getDb(): AppDatabase =
         Room.databaseBuilder(
             context,

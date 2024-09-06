@@ -2,8 +2,6 @@ package com.minthuya.sw.ui.sync
 
 import androidx.lifecycle.viewModelScope
 import com.minthuya.component.viewmodel.BaseViewModel
-import com.minthuya.localdbkit.entity.Station
-import com.minthuya.networkkit.UiResult
 import com.minthuya.networkkit.execute
 import com.minthuya.networkkit.postEmit
 import com.minthuya.sw.data.model.SyncResult
@@ -14,13 +12,24 @@ import kotlinx.coroutines.launch
 
 class SyncStationsViewModel(
     private val syncStationsService: SyncStationsService
-): BaseViewModel() {
+) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow<SyncResult>(SyncResult.Indeterminant)
     val uiState = _uiState.asStateFlow()
 
     fun syncStations() = viewModelScope.launch {
-        syncStationsService.sync().execute(
+        syncStationsService.autoSync().execute(
+            success = {
+                _uiState.postEmit(this, it)
+            },
+            error = {
+                syncLocalStations()
+            }
+        )
+    }
+
+    private fun syncLocalStations() = viewModelScope.launch {
+        syncStationsService.syncLocal().execute(
             success = {
                 _uiState.postEmit(this, it)
             },
@@ -29,6 +38,4 @@ class SyncStationsViewModel(
             }
         )
     }
-
-
 }

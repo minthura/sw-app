@@ -1,7 +1,6 @@
 package com.minthuya.localdbkit.entity
 
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.minthuya.localdbkit.constant.TableName.TBL_STATIONS
 import java.time.LocalTime

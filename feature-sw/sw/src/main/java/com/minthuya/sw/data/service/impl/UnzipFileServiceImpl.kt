@@ -1,28 +1,26 @@
 package com.minthuya.sw.data.service.impl
 
 import android.content.Context
-import com.minthuya.sw.data.model.DownloadState
 import com.minthuya.sw.data.model.UnzipState
 import com.minthuya.sw.data.service.UnzipFileService
+import com.minthuya.sw.util.Constants
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 
 class UnzipFileServiceImpl(
     private val context: Context,
     private val scope: CoroutineDispatcher = Dispatchers.IO,
-): UnzipFileService {
-    override fun unzipFile(zipFile: File): Flow<UnzipState> = flow {
-        println("UnzipFileService")
-        val buffer = ByteArray(1024)
+) : UnzipFileService {
+    override operator fun invoke(zipFile: File): Flow<UnzipState> = flow {
+        val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
 
         // Create destination directory if it doesn't exist
         val destDir = context.filesDir
@@ -49,7 +47,7 @@ class UnzipFileServiceImpl(
                         while (zis.read(buffer).also { len = it } > 0) {
                             fos.write(buffer, 0, len)
                             extractedSize += len
-                            val progress = (extractedSize * 100 / totalSize)
+                            val progress = (extractedSize * Constants.INT_100 / totalSize)
                             emit(UnzipState.Unzipping(progress))
                         }
                     }

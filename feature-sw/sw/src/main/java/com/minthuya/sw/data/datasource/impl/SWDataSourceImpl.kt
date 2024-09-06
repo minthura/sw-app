@@ -9,8 +9,13 @@ import okhttp3.ResponseBody
 class SWDataSourceImpl(
     private val stationDao: StationDao,
     private val swApi: SWApi
-): SWDataSource {
-    override suspend fun getShortWaveSchedules(offset: Int, limit: Int, language: String, station: String?): List<Station> =
+) : SWDataSource {
+    override suspend fun getShortWaveSchedules(
+        offset: Int,
+        limit: Int,
+        language: String,
+        station: String?
+    ): List<Station> =
         stationDao.getStations(limit, offset, language, station)
 
     override suspend fun getLanguages(): List<String> =

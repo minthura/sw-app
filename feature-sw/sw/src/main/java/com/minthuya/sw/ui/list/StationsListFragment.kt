@@ -1,18 +1,12 @@
 package com.minthuya.sw.ui.list
 
 import android.content.Context
-import android.util.Log
-import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import com.minthuya.component.base.BaseFragment
 import com.minthuya.component.collectWhenStarted
 import com.minthuya.component.parent
-import com.minthuya.localdbkit.entity.Station
 import com.minthuya.networkkit.UiResult
 import com.minthuya.sw.R
 import com.minthuya.sw.data.model.RadioStation
@@ -21,7 +15,7 @@ import com.minthuya.sw.di.DaggerSWComponent
 import com.minthuya.sw.ui.StationsAdapter
 import javax.inject.Inject
 
-class StationsListFragment: BaseFragment<SwStationsListFragmentBinding>(
+class StationsListFragment : BaseFragment<SwStationsListFragmentBinding>(
     SwStationsListFragmentBinding::inflate
 ) {
 
@@ -30,6 +24,7 @@ class StationsListFragment: BaseFragment<SwStationsListFragmentBinding>(
     private var isChipChecked = false
     private val languages = mutableListOf<String>()
     private val stations = mutableListOf<RadioStation>()
+
     @Inject
     lateinit var viewModel: StationsListViewModel
 
@@ -104,6 +99,10 @@ class StationsListFragment: BaseFragment<SwStationsListFragmentBinding>(
     }
 
     private fun hideKeyboard() {
-        (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(view?.windowToken, 0)
+        (
+            context?.getSystemService(
+                Context.INPUT_METHOD_SERVICE
+            ) as? InputMethodManager
+            )?.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }

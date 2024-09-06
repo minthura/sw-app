@@ -10,7 +10,7 @@ interface GetSWLanguagesUseCase {
 
 class GetSWLanguagesUseCaseImpl(
     private val swRepository: SWRepository
-): GetSWLanguagesUseCase {
+) : GetSWLanguagesUseCase {
     override fun invoke(): Flow<List<String>> =
         swRepository.getLanguages().map { languages ->
             languages.filter { it.isNotEmpty() }.sortedBy { it }

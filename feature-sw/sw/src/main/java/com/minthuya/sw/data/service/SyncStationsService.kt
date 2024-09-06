@@ -4,5 +4,6 @@ import com.minthuya.sw.data.model.SyncResult
 import kotlinx.coroutines.flow.Flow
 
 interface SyncStationsService {
-    fun sync(force: Boolean = false): Flow<SyncResult>
+    fun autoSync(force: Boolean = false): Flow<SyncResult>
+    fun syncLocal(): Flow<SyncResult>
 }

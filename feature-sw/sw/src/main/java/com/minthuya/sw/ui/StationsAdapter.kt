@@ -7,22 +7,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.minthuya.localdbkit.entity.Station
 import com.minthuya.sw.R
 import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.databinding.SwStationListItemBinding
 import com.minthuya.sw.util.admToCountryMap
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.util.Locale
 
 class StationsAdapter(
     private val onLoadMore: ((Int) -> Unit)
-): RecyclerView.Adapter<StationsAdapter.StationViewHolder>() {
+) : RecyclerView.Adapter<StationsAdapter.StationViewHolder>() {
 
     var offset = 0
 
@@ -35,7 +30,7 @@ class StationsAdapter(
 
     inner class StationViewHolder(
         private val binding: SwStationListItemBinding
-    ): ViewHolder(binding.root) {
+    ) : ViewHolder(binding.root) {
         fun bind(station: RadioStation) {
             binding.swTitle.text = station.name
             val from = station.startTime

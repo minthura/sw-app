@@ -15,7 +15,7 @@ class SWRepositoryImpl(
     private val swDataSource: SWDataSource,
     private val localDbKit: LocalDbKit,
     private val scope: CoroutineDispatcher = Dispatchers.IO
-): SWRepository {
+) : SWRepository {
     override fun getStations(offset: Int, limit: Int, language: String, station: String?): Flow<List<Station>> {
         return flow {
             emit(swDataSource.getShortWaveSchedules(offset, limit, language, station))
@@ -23,19 +23,19 @@ class SWRepositoryImpl(
     }
 
     override fun getLanguages(): Flow<List<String>> {
-        return  flow {
+        return flow {
             emit(swDataSource.getLanguages())
         }.flowOn(scope)
     }
 
     override fun downloadNxa24Zip(): Flow<ResponseBody> {
-        return  flow {
+        return flow {
             emit(swDataSource.downloadNxa24Zip())
         }.flowOn(scope)
     }
 
     override fun hasPersistedInDb(): Flow<Boolean> {
-        return  flow {
+        return flow {
             val db = localDbKit.getDb()
             emit(db.stationDao().stationsCount() > 0)
             println("hasPersistedInDb")

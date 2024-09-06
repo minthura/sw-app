@@ -16,9 +16,9 @@ import com.minthuya.sw.data.repository.impl.SWRepositoryImpl
 import com.minthuya.sw.data.service.DownloadFileService
 import com.minthuya.sw.data.service.PersistStationsDbService
 import com.minthuya.sw.data.service.PersistStationsDbServiceImpl
-import com.minthuya.sw.data.service.impl.DownloadFileServiceImpl
 import com.minthuya.sw.data.service.SyncStationsService
 import com.minthuya.sw.data.service.UnzipFileService
+import com.minthuya.sw.data.service.impl.DownloadFileServiceImpl
 import com.minthuya.sw.data.service.impl.SyncStationsServiceImpl
 import com.minthuya.sw.data.service.impl.UnzipFileServiceImpl
 import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCase
@@ -158,5 +158,4 @@ object SWModule {
     fun provideSWApi(
         networkKit: NetworkKit
     ): SWApi = networkKit.createSWService(SWApi::class.java)
-
 }
