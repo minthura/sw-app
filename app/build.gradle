@@ -23,10 +23,12 @@ android {
             dimension 'api'
             applicationIdSuffix ".uat"
             buildConfigField "String", "MS_URL", '"https://api.openweathermap.org"'
+            buildConfigField "String", "SW_BASE_URL", '"https://www1.s2.starcat.ne.jp/ndxc/"'
         }
         prod {
             dimension 'api'
             buildConfigField "String", "MS_URL", '"https://api.openweathermap.org"'
+            buildConfigField "String", "SW_BASE_URL", '"https://www1.s2.starcat.ne.jp/ndxc/"'
         }
     }
 

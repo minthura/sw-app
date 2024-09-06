@@ -57,20 +57,35 @@ class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collectLatest {
                     when (it) {
+                        is SyncResult.DownloadingZip -> {
+                            binding.status.text = "Downloading the latest database."
+                            binding.progressBar.isIndeterminate = false
+                            binding.progressBar.progress = it.progress.toInt()
+                        }
                         is SyncResult.Error -> showSnackBar("Cannot sync the stations.") {
                             viewModel.syncStations()
                         }
-                        is SyncResult.Loading -> {
-                            it.progress?.toInt()?.let {
-                                binding.progressBar.isIndeterminate = false
-                                binding.progressBar.progress = it
-                            } ?: {
-                                binding.progressBar.isIndeterminate = true
-                            }
+                        SyncResult.Indeterminant -> {
+                            binding.status.text = "Preparing to update to latest database"
+                            binding.progressBar.isIndeterminate = true
                         }
-                        is SyncResult.Success -> {
-                            internalNavigator.navigateToListScreen()
+                        is SyncResult.LoadingChannels -> {
+                            binding.status.text = "Updating database with the latest records"
+                            binding.progressBar.isIndeterminate = false
+                            binding.progressBar.progress = it.progress.toInt()
                         }
+                        SyncResult.ReadingNxa24File -> {
+                            binding.status.text = "Reading the database file. It may take a while."
+                            binding.progressBar.isIndeterminate = true
+                        }
+                        SyncResult.Success -> internalNavigator.navigateToListScreen()
+                        is SyncResult.Unzipping -> {
+                            binding.status.text = "Extracting the downloaded database."
+                            binding.progressBar.isIndeterminate = false
+                            binding.progressBar.progress = it.progress.toInt()
+                        }
+
+                        is SyncResult.DownloadSuccess -> Unit
                     }
                 }
             }

@@ -16,7 +16,7 @@ class SyncStationsViewModel(
     private val syncStationsService: SyncStationsService
 ): BaseViewModel() {
 
-    private val _uiState = MutableStateFlow<SyncResult>(SyncResult.Loading())
+    private val _uiState = MutableStateFlow<SyncResult>(SyncResult.Indeterminant)
     val uiState = _uiState.asStateFlow()
 
     fun syncStations() = viewModelScope.launch {

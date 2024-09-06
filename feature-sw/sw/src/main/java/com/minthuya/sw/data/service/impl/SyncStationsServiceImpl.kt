@@ -2,75 +2,81 @@ package com.minthuya.sw.data.service.impl
 
 import android.content.Context
 import com.minthuya.localdbkit.LocalDbKit
-import com.minthuya.localdbkit.entity.Station
+import com.minthuya.sw.data.model.DownloadState
+import com.minthuya.sw.data.model.PersistState
 import com.minthuya.sw.data.model.SyncResult
+import com.minthuya.sw.data.model.UnzipState
+import com.minthuya.sw.data.repository.SWRepository
+import com.minthuya.sw.data.service.DownloadFileService
+import com.minthuya.sw.data.service.PersistStationsDbService
 import com.minthuya.sw.data.service.SyncStationsService
+import com.minthuya.sw.data.service.UnzipFileService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
-import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.time.LocalTime
-import java.time.format.DateTimeFormatterBuilder
-import java.time.format.DateTimeParseException
-import java.util.Locale
+import kotlinx.coroutines.flow.map
+import java.io.File
+import java.io.InputStream
 
 class SyncStationsServiceImpl(
     private val context: Context,
-    private val localDbKit: LocalDbKit,
-    private val scope: CoroutineDispatcher = Dispatchers.Default,
+    private val downloadFileService: DownloadFileService,
+    private val unzipFileService: UnzipFileService,
+    private val persistStationsDbService: PersistStationsDbService,
+    private val repository: SWRepository,
 ): SyncStationsService {
 
-    private val df = DateTimeFormatterBuilder().apply {
-        parseCaseInsensitive()
-        appendPattern("HHmm")
-    }.toFormatter(Locale.ENGLISH)
-
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun sync(force: Boolean): Flow<SyncResult> =
-        flow {
-            emit(SyncResult.Loading())
-            val db = localDbKit.getDb()
-            if (db.stationDao().stationsCount() > 0 && !force) {
-                emit(SyncResult.Success())
-                return@flow
-            }
-            context.assets.open("nxa24.xlsx").use {
-                XSSFWorkbook(it).use { workbook ->
-                    db.stationDao().deleteAll()
-                    val sheet = workbook.getSheetAt(0)
-                    val total = sheet.count() - 2
-                    sheet.filterIndexed { index, row ->
-                        index > 2 && row.getCell(0)?.numericCellValue.toString().isNotEmpty()
-                    }.mapIndexed { index, row ->
-                        db.stationDao().insert(
-                            Station(
-                                frequency = row.getCell(0)?.numericCellValue.toString(),
-                                name = row.getCell(2)?.stringCellValue.orEmpty(),
-                                startTime = row.getCell(3)?.stringCellValue?.split("-")?.getOrNull(0)?.let {
-                                    try {
-                                        LocalTime.parse(it.take(4), df)
-                                    } catch (e: DateTimeParseException) {
-                                        LocalTime.now()
+        repository.hasPersistedInDb().flatMapConcat { hasPersisted ->
+            if (!hasPersisted) {
+                // Download the file
+                downloadFileService().flatMapConcat { downloadState ->
+                    when (downloadState) {
+                        is DownloadState.Downloading -> {
+                            flowOf(SyncResult.DownloadingZip(downloadState.progress))
+                        }
+                        is DownloadState.Finished -> {
+                            // Unzip the downloaded file
+                            unzipFileService.unzipFile(downloadState.file).flatMapConcat { unzipState ->
+                                when (unzipState) {
+                                    is UnzipState.Unzipping -> {
+                                        flowOf(SyncResult.Unzipping(unzipState.progress))
                                     }
-                                } ?: LocalTime.now(),
-                                endTime = row.getCell(3)?.stringCellValue?.split("-")?.getOrNull(1)?.let {
-                                    try {
-                                        LocalTime.parse(it.take(4), df)
-                                    } catch (e: DateTimeParseException) {
-                                        LocalTime.now()
+                                    is UnzipState.Finished -> {
+                                        // Persist the file to DB
+                                        persistStationsDbService(File(unzipState.dir, "nxa24.xlsx").inputStream())
+                                            .flatMapConcat { persistState ->
+                                                when (persistState) {
+                                                    is PersistState.Persisting -> {
+                                                        flowOf(SyncResult.LoadingChannels(persistState.progress))
+                                                    }
+                                                    PersistState.ReadingFile -> {
+                                                        flowOf(SyncResult.ReadingNxa24File)
+                                                    }
+                                                    PersistState.Success -> {
+                                                        flowOf(SyncResult.Success)
+                                                    }
+                                                }
+                                            }
                                     }
-                                } ?: LocalTime.now(),
-                                language = row.getCell(5)?.stringCellValue.orEmpty(),
-                                location = row.getCell(8)?.stringCellValue.orEmpty(),
-                                adm = row.getCell(9)?.stringCellValue.orEmpty(),
-                            )
-                        )
-                        val percent = (index.inc().toDouble() / total.toDouble()) * 100
-                        emit(SyncResult.Loading(percent))
+                                }
+                            }
+                        }
                     }
                 }
+            } else {
+                // If already persisted, return success
+                flowOf(SyncResult.Success)
             }
-            emit(SyncResult.Success())
-        }.flowOn(scope)
+        }
 }

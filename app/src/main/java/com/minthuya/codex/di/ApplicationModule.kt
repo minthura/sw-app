@@ -22,11 +22,13 @@ object ApplicationModule {
     @AppScope
     fun provideCoreApp(
         context: Application,
-        @Named(CoreAppConstant.BASE_MS_URL) baseUrl: String
+        @Named(CoreAppConstant.BASE_MS_URL) baseUrl: String,
+        @Named(CoreAppConstant.SW_BASE_MS_URL) swBaseUrl: String,
     ): CoreApp {
         val coreApp = CoreAppImpl(
             context = context,
-            baseUrl = baseUrl
+            baseUrl = baseUrl,
+            swBaseUrl = swBaseUrl
         )
         coreApp.create()
         return coreApp
@@ -36,4 +38,9 @@ object ApplicationModule {
     @AppScope
     @Named(CoreAppConstant.BASE_MS_URL)
     fun provideBaseUrl(): String = BuildConfig.MS_URL
+
+    @Provides
+    @AppScope
+    @Named(CoreAppConstant.SW_BASE_MS_URL)
+    fun provideSwBaseUrl(): String = BuildConfig.SW_BASE_URL
 }

@@ -7,12 +7,20 @@ import com.minthuya.component.FragmentScope
 import com.minthuya.component.viewmodel.getViewModel
 import com.minthuya.localdbkit.LocalDbKit
 import com.minthuya.localdbkit.dao.StationDao
+import com.minthuya.networkkit.NetworkKit
+import com.minthuya.sw.data.api.SWApi
 import com.minthuya.sw.data.datasource.SWDataSource
-import com.minthuya.sw.data.datasource.impl.SWLocalDataSource
+import com.minthuya.sw.data.datasource.impl.SWDataSourceImpl
 import com.minthuya.sw.data.repository.SWRepository
 import com.minthuya.sw.data.repository.impl.SWRepositoryImpl
+import com.minthuya.sw.data.service.DownloadFileService
+import com.minthuya.sw.data.service.PersistStationsDbService
+import com.minthuya.sw.data.service.PersistStationsDbServiceImpl
+import com.minthuya.sw.data.service.impl.DownloadFileServiceImpl
 import com.minthuya.sw.data.service.SyncStationsService
+import com.minthuya.sw.data.service.UnzipFileService
 import com.minthuya.sw.data.service.impl.SyncStationsServiceImpl
+import com.minthuya.sw.data.service.impl.UnzipFileServiceImpl
 import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCase
 import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCaseImpl
 import com.minthuya.sw.domain.usecase.GetSWStationsUseCase
@@ -30,11 +38,17 @@ object SWModule {
     @FragmentScope
     fun provideReadFromExcelService(
         context: Context,
-        localDbKit: LocalDbKit
+        downloadFileService: DownloadFileService,
+        unzipFileService: UnzipFileService,
+        persistStationsDbService: PersistStationsDbService,
+        repository: SWRepository
     ): SyncStationsService =
         SyncStationsServiceImpl(
             context,
-            localDbKit
+            downloadFileService,
+            unzipFileService,
+            persistStationsDbService,
+            repository
         )
 
     @Provides
@@ -46,19 +60,23 @@ object SWModule {
     @Provides
     @FragmentScope
     fun provideSWDataSource(
-        stationDao: StationDao
+        stationDao: StationDao,
+        swApi: SWApi
     ): SWDataSource =
-        SWLocalDataSource(
-            stationDao
+        SWDataSourceImpl(
+            stationDao,
+            swApi
         )
 
     @Provides
     @FragmentScope
     fun provideSWRepository(
-        swDataSource: SWDataSource
+        swDataSource: SWDataSource,
+        localDbKit: LocalDbKit
     ): SWRepository =
         SWRepositoryImpl(
-            swDataSource
+            swDataSource,
+            localDbKit
         )
 
     @Provides
@@ -67,6 +85,35 @@ object SWModule {
         swRepository: SWRepository
     ): GetSWStationsUseCase =
         GetSWStationsUseCaseImpl(swRepository)
+
+    @Provides
+    @FragmentScope
+    fun provideUnzipFileService(
+        context: Context
+    ): UnzipFileService =
+        UnzipFileServiceImpl(
+            context
+        )
+
+    @Provides
+    @FragmentScope
+    fun provideDownloadFileService(
+        context: Context,
+        swRepository: SWRepository
+    ): DownloadFileService =
+        DownloadFileServiceImpl(
+            context,
+            swRepository
+        )
+
+    @Provides
+    @FragmentScope
+    fun providePersistStationsDbService(
+        localDbKit: LocalDbKit
+    ): PersistStationsDbService =
+        PersistStationsDbServiceImpl(
+            localDbKit
+        )
 
     @Provides
     @FragmentScope
@@ -105,5 +152,11 @@ object SWModule {
         SWInternalNavigatorImpl(
             navController
         )
+
+    @Provides
+    @FragmentScope
+    fun provideSWApi(
+        networkKit: NetworkKit
+    ): SWApi = networkKit.createSWService(SWApi::class.java)
 
 }

@@ -12,7 +12,8 @@ import javax.inject.Inject
 
 class CoreAppImpl(
     private val context: Application,
-    private val baseUrl: String
+    private val baseUrl: String,
+    private val swBaseUrl: String,
 ) : CoreApp {
 
     @Inject
@@ -23,7 +24,8 @@ class CoreAppImpl(
             context = context,
             coreAppModule = CoreAppModule(
                 networkConfig = NetworkConfig(
-                    baseUrl = baseUrl
+                    baseUrl = baseUrl,
+                    swBaseUrl = swBaseUrl
                 )
             )
         )
