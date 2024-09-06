@@ -38,7 +38,7 @@ class PersistStationsDbServiceImpl(
         inputStream.use {
             XSSFWorkbook(it).use { workbook ->
                 db.stationDao().deleteAll()
-                val sheet = workbook.getSheetAt(0)
+                val sheet = workbook.first()
                 val total = sheet.count() - 2
                 sheet.filterIndexed { index, row ->
                     index > 2 && row.firstOrNull()?.numericCellValue.toString().isNotEmpty()
