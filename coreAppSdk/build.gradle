@@ -57,6 +57,6 @@ dependencies {
 
 tasks.configureEach { task ->
     if (task.name == "preDebugBuild") {
-        task.dependsOn ":build-logic:gradle-plugin:publishPluginMavenPublicationToMavenRepository"
+        task.dependsOn ":build-logic:gradle-plugin:publishAllPublicationsToMavenRepository"
     }
 }
