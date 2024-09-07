@@ -41,7 +41,7 @@ publishing {
 }
 
 gradle.taskGraph.whenReady { graph ->
-    publishPluginMavenPublicationToMavenLocal.onlyIf {
+    publishPluginMavenPublicationToMavenRepository.onlyIf {
         def libsFile = new File("$rootDir/gradle/libs.versions.toml")
         def libsChecksumFile = new File("$rootDir/gradle/libs.versions.toml.md5")
         def digest = MessageDigest.getInstance("MD5")
