@@ -1,6 +1,9 @@
 package com.minthuya.sw.data.repository.impl
 
 import com.minthuya.localdbkit.LocalDbKit
+import com.minthuya.localdbkit.dao.SettingDao
+import com.minthuya.localdbkit.dao.StationDao
+import com.minthuya.localdbkit.entity.Setting
 import com.minthuya.localdbkit.entity.Station
 import com.minthuya.sw.data.datasource.SWDataSource
 import com.minthuya.sw.data.repository.SWRepository
@@ -13,7 +16,8 @@ import okhttp3.ResponseBody
 
 class SWRepositoryImpl(
     private val swDataSource: SWDataSource,
-    private val localDbKit: LocalDbKit,
+    private val stationDao: StationDao,
+    private val settingDao: SettingDao,
     private val scope: CoroutineDispatcher = Dispatchers.IO
 ) : SWRepository {
     override fun getStations(offset: Int, limit: Int, language: String, station: String?): Flow<List<Station>> {
@@ -36,9 +40,26 @@ class SWRepositoryImpl(
 
     override fun hasPersistedInDb(): Flow<Boolean> {
         return flow {
-            val db = localDbKit.getDb()
-            emit(db.stationDao().stationsCount() > 0)
-            println("hasPersistedInDb")
+            emit(stationDao.stationsCount() > 0)
+        }.flowOn(scope)
+    }
+
+    override fun setSetting(key: String, value: String): Flow<Boolean> {
+        return flow {
+            emit(
+                settingDao.setSetting(
+                    Setting(
+                        key = key,
+                        value = value
+                    )
+                )
+            )
+        }.flowOn(scope)
+    }
+
+    override fun getSetting(key: String): Flow<String?> {
+        return flow {
+            emit(settingDao.getSetting(key)?.value)
         }.flowOn(scope)
     }
 }

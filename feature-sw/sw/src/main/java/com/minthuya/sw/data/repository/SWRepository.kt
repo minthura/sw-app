@@ -9,4 +9,6 @@ interface SWRepository {
     fun getLanguages(): Flow<List<String>>
     fun downloadNxa24Zip(): Flow<ResponseBody>
     fun hasPersistedInDb(): Flow<Boolean>
+    fun setSetting(key: String, value: String): Flow<Boolean>
+    fun getSetting(key: String): Flow<String?>
 }

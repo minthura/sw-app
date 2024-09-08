@@ -11,23 +11,23 @@ interface StationDao {
     @Query(
         "SELECT * FROM stations WHERE language LIKE :language AND (:station IS NULL OR name = :station) LIMIT :pageSize OFFSET :pageIndex * :pageSize"
     )
-    fun getStations(pageSize: Int, pageIndex: Int, language: String, station: String?): List<Station>
+    suspend fun getStations(pageSize: Int, pageIndex: Int, language: String, station: String?): List<Station>
 
     @Query("SELECT * FROM stations WHERE language LIKE :language")
-    fun findByLanguage(language: String): List<Station>
+    suspend fun findByLanguage(language: String): List<Station>
 
     @Query("SELECT DISTINCT language from stations")
-    fun getLanguages(): List<String>
+    suspend fun getLanguages(): List<String>
 
     @Insert
-    fun insert(station: Station)
+    suspend fun insert(station: Station)
 
     @Delete
-    fun delete(station: Station)
+    suspend fun delete(station: Station)
 
     @Query("DELETE FROM stations")
-    fun deleteAll()
+    suspend fun deleteAll()
 
     @Query("SELECT COUNT(id) FROM stations")
-    fun stationsCount(): Int
+    suspend fun stationsCount(): Int
 }

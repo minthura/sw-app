@@ -1,8 +1,10 @@
 package com.minthuya.sw.ui.list
 
 import android.content.Context
+import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView.OnItemClickListener
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.minthuya.component.base.BaseFragment
 import com.minthuya.component.collectWhenStarted
@@ -13,6 +15,7 @@ import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.databinding.SwStationsListFragmentBinding
 import com.minthuya.sw.di.DaggerSWComponent
 import com.minthuya.sw.ui.StationsAdapter
+import com.minthuya.sw.ui.bottomsheet.ExitConfirmationBottomSheet
 import javax.inject.Inject
 
 class StationsListFragment : BaseFragment<SwStationsListFragmentBinding>(
@@ -30,6 +33,28 @@ class StationsListFragment : BaseFragment<SwStationsListFragmentBinding>(
 
     private val adapter = StationsAdapter {
         viewModel.getStations(it, currentLanguage, currentStation, isChipChecked)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback {
+            showExitConfirmationBottomSheet()
+        }
+    }
+
+    private fun showExitConfirmationBottomSheet() {
+        ExitConfirmationBottomSheet().apply {
+            onPositiveAction = {
+                dismiss()
+                requireActivity().finish()
+            }
+            onNegativeAction = {
+                dismiss()
+            }
+        }.show(
+            parentFragmentManager,
+            ExitConfirmationBottomSheet::class.simpleName
+        )
     }
 
     override fun setupDi() {

@@ -24,6 +24,15 @@ class SwActivity : AppCompatActivity(), SWListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        binding.topAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.settings -> {
+                    // Handle edit text press
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun setTopNavBarVisibility(isVisible: Boolean) {

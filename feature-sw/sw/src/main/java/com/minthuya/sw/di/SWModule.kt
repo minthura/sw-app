@@ -6,6 +6,7 @@ import androidx.navigation.NavController
 import com.minthuya.component.FragmentScope
 import com.minthuya.component.viewmodel.getViewModel
 import com.minthuya.localdbkit.LocalDbKit
+import com.minthuya.localdbkit.dao.SettingDao
 import com.minthuya.localdbkit.dao.StationDao
 import com.minthuya.networkkit.NetworkKit
 import com.minthuya.sw.data.api.SWApi
@@ -59,6 +60,12 @@ object SWModule {
 
     @Provides
     @FragmentScope
+    fun provideSettingsDao(
+        localDbKit: LocalDbKit
+    ): SettingDao = localDbKit.getDb().settingsDao()
+
+    @Provides
+    @FragmentScope
     fun provideSWDataSource(
         stationDao: StationDao,
         swApi: SWApi
@@ -72,11 +79,13 @@ object SWModule {
     @FragmentScope
     fun provideSWRepository(
         swDataSource: SWDataSource,
-        localDbKit: LocalDbKit
+        stationDao: StationDao,
+        settingDao: SettingDao
     ): SWRepository =
         SWRepositoryImpl(
             swDataSource,
-            localDbKit
+            stationDao,
+            settingDao
         )
 
     @Provides

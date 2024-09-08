@@ -113,4 +113,5 @@
         <item>WWVH</item>
         <item>XingXing</item>
     </string-array>
+    <string name="sw_app_settings">Settings\n</string>
 </resources>
