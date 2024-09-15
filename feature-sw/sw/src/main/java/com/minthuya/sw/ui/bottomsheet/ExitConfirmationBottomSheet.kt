@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.minthuya.sw.databinding.SwExitConfirmBottomSheetBinding
 
-class ExitConfirmationBottomSheet: BottomSheetDialogFragment() {
+class ExitConfirmationBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: SwExitConfirmBottomSheetBinding
 
     var onPositiveAction: (() -> Unit)? = null

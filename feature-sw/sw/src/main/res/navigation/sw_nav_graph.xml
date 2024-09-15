@@ -20,5 +20,9 @@
         android:id="@+id/swStationslistfragment"
         android:name="com.minthuya.sw.ui.list.StationsListFragment"
         android:label="StationsListFragment" />
+    <fragment
+        android:id="@+id/swSettingsfragment"
+        android:name="com.minthuya.sw.ui.setting.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

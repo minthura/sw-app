@@ -38,9 +38,13 @@ abstract class BaseFragment<VB : ViewBinding>(
         onViewCreated()
     }
 
-    protected fun showSnackBar(text: String, retry: (() -> Unit)? = null) =
+    protected fun showSnackBarWithAction(text: String, retry: (() -> Unit)? = null) =
         Snackbar.make(binding.root, text, Snackbar.LENGTH_INDEFINITE)
             .setAction("Retry") { retry?.invoke() }
+            .show()
+
+    protected fun showSnackBar(text: String) =
+        Snackbar.make(binding.root, text, Snackbar.LENGTH_LONG)
             .show()
 
     open fun setupDi() {}

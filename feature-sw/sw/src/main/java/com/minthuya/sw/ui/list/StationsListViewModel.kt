@@ -8,13 +8,15 @@ import com.minthuya.networkkit.postEmit
 import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCase
 import com.minthuya.sw.domain.usecase.GetSWStationsUseCase
+import com.minthuya.sw.domain.usecase.SettingsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class StationsListViewModel(
     private val getSWStationsUseCase: GetSWStationsUseCase,
-    private val getSWLanguagesUseCase: GetSWLanguagesUseCase
+    private val getSWLanguagesUseCase: GetSWLanguagesUseCase,
+    private val settingsUseCase: SettingsUseCase
 ) : BaseViewModel() {
 
     private val _uiState = MutableStateFlow<UiResult<List<RadioStation>>>(UiResult.Loading())
@@ -22,6 +24,9 @@ class StationsListViewModel(
 
     private val _languagesState = MutableStateFlow<UiResult<List<String>>>(UiResult.Loading())
     val languagesState = _languagesState.asStateFlow()
+
+    private val _getSettingState = MutableStateFlow<UiResult<Map<String, String>>>(UiResult.Loading())
+    val getSettingState = _getSettingState.asStateFlow()
 
     fun getLanguages() = viewModelScope.launch {
         _languagesState.emit(UiResult.Loading())
@@ -44,6 +49,17 @@ class StationsListViewModel(
             },
             error = {
                 _uiState.postEmit(this, UiResult.Error(it))
+            }
+        )
+    }
+
+    fun getSettings() = viewModelScope.launch {
+        settingsUseCase.getSettings().execute(
+            success = {
+                _getSettingState.postEmit(this, UiResult.Success(it))
+            },
+            error = {
+                _getSettingState.postEmit(this, UiResult.Error(it))
             }
         )
     }

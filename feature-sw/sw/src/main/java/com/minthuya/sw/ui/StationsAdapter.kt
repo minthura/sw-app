@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.minthuya.sw.R
 import com.minthuya.sw.data.model.RadioStation
 import com.minthuya.sw.databinding.SwStationListItemBinding
-import com.minthuya.sw.util.admToCountryMap
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeFormatterBuilder
 import java.util.Locale
@@ -38,26 +37,26 @@ class StationsAdapter(
             binding.swSubtitle.text = buildString {
                 append(station.frequency)
                 appendLine(" kHz")
-                append("Broadcasting ")
+                append("Live ")
                 if (from == to) {
-                    appendLine("all day")
+                    append("all day")
                 } else {
-                    appendLine("from ${from.format(df)} to ${to.format(df)}")
+                    append("from ${from.format(df)} to ${to.format(df)}")
                 }
-                append(station.location)
+                /*append(station.location)
                 admToCountryMap[station.adm]?.let {
                     append(", ")
                     append(admToCountryMap[station.adm])
-                }
+                }*/
             }
-            binding.statusView.background = ContextCompat.getDrawable(
+            /*binding.statusView.background = ContextCompat.getDrawable(
                 binding.root.context,
                 if (station.isLiveNow) {
                     R.drawable.sw_online
                 } else {
                     R.drawable.sw_offline
                 }
-            )
+            )*/
             binding.prefixImageview.setImageDrawable(
                 ContextCompat.getDrawable(
                     binding.root.context,

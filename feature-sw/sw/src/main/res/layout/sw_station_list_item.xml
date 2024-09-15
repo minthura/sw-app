@@ -45,6 +45,7 @@
         android:id="@+id/status_view"
         android:layout_width="8dp"
         android:layout_height="8dp"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/sw_title"
         app:layout_constraintEnd_toEndOf="@id/sw_title"
         app:layout_constraintBottom_toBottomOf="@id/sw_title"

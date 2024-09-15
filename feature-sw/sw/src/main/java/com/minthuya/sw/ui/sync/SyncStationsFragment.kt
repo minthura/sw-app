@@ -1,18 +1,17 @@
 package com.minthuya.sw.ui.sync
 
-import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.minthuya.component.base.BaseFragment
 import com.minthuya.component.parent
-import com.minthuya.sw.SWListener
 import com.minthuya.sw.data.model.SyncResult
 import com.minthuya.sw.data.service.SyncStationsService
 import com.minthuya.sw.databinding.SwEntryFragmentBinding
 import com.minthuya.sw.di.DaggerSWComponent
 import com.minthuya.sw.navigator.SWInternalNavigator
+import com.minthuya.sw.util.setTopNavBarVisibility
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,8 +19,6 @@ import javax.inject.Inject
 class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
     SwEntryFragmentBinding::inflate
 ) {
-
-    private var listener: SWListener? = null
 
     @Inject
     lateinit var syncStationsService: SyncStationsService
@@ -41,15 +38,9 @@ class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
         ).inject(this)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = context as? SWListener
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener?.setTopNavBarVisibility(true)
-        listener = null
+    override fun onStop() {
+        super.onStop()
+        setTopNavBarVisibility(true)
     }
 
     override fun setupObservers() {
@@ -62,7 +53,7 @@ class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
                             binding.progressBar.isIndeterminate = false
                             binding.progressBar.progress = it.progress.toInt()
                         }
-                        is SyncResult.Error -> showSnackBar("Cannot sync the stations.") {
+                        is SyncResult.Error -> showSnackBarWithAction("Cannot sync the stations.") {
                             viewModel.syncStations()
                         }
                         SyncResult.Indeterminant -> {
@@ -93,7 +84,7 @@ class SyncStationsFragment : BaseFragment<SwEntryFragmentBinding>(
     }
 
     override fun setupView() {
-        listener?.setTopNavBarVisibility(false)
+        setTopNavBarVisibility(false)
     }
 
     override fun onViewCreated() {

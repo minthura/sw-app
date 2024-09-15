@@ -1,6 +1,5 @@
 package com.minthuya.sw.data.repository.impl
 
-import com.minthuya.localdbkit.LocalDbKit
 import com.minthuya.localdbkit.dao.SettingDao
 import com.minthuya.localdbkit.dao.StationDao
 import com.minthuya.localdbkit.entity.Setting
@@ -44,22 +43,17 @@ class SWRepositoryImpl(
         }.flowOn(scope)
     }
 
-    override fun setSetting(key: String, value: String): Flow<Boolean> {
+    override fun setSettings(settings: List<Setting>): Flow<Boolean> {
         return flow {
             emit(
-                settingDao.setSetting(
-                    Setting(
-                        key = key,
-                        value = value
-                    )
-                )
+                settingDao.setSettings(settings)
             )
         }.flowOn(scope)
     }
 
-    override fun getSetting(key: String): Flow<String?> {
+    override fun getSettings(): Flow<List<Setting>> {
         return flow {
-            emit(settingDao.getSetting(key)?.value)
+            emit(settingDao.getSettings())
         }.flowOn(scope)
     }
 }

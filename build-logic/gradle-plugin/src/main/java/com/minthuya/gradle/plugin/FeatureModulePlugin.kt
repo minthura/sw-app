@@ -48,6 +48,7 @@ class FeatureModulePlugin : Plugin<Project> {
         project.dependencies.add("implementation", project.project(":platform:component"))
         project.dependencies.add("implementation", project.project(":platform:networkKit"))
         project.dependencies.addProvider("implementation", libs.findLibrary("room.runtime").get())
+        project.dependencies.addProvider("implementation", libs.findLibrary("room.ktx").get())
         project.dependencies.addProvider("annotationProcessor", libs.findLibrary("room.compiler").get())
         project.dependencies.addProvider("ksp", libs.findLibrary("room.compiler").get())
         project.dependencies.addProvider("testImplementation", libs.findLibrary("junit").get())
@@ -85,7 +86,8 @@ class FeatureModulePlugin : Plugin<Project> {
             "androidx.test.runner",
             "androidx.test.uiautomator",
             "room.compiler",
-            "room.runtime"
+            "room.runtime",
+            "room.ktx",
         )
     }
 }

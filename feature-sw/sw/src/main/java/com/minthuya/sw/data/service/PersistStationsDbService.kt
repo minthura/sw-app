@@ -1,9 +1,11 @@
 package com.minthuya.sw.data.service
 
 import com.minthuya.localdbkit.LocalDbKit
+import com.minthuya.localdbkit.entity.Setting
 import com.minthuya.localdbkit.entity.Station
 import com.minthuya.sw.data.model.PersistState
 import com.minthuya.sw.util.Constants
+import com.minthuya.sw.util.SettingConstants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -11,6 +13,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.InputStream
+import java.time.Instant
 import java.time.LocalTime
 import java.time.format.DateTimeFormatterBuilder
 import java.time.format.DateTimeParseException
@@ -35,6 +38,20 @@ class PersistStationsDbServiceImpl(
     ): Flow<PersistState> = flow {
         emit(PersistState.ReadingFile)
         val db = localDbKit.getDb()
+        if (db.stationDao().stationsCount() == 0) {
+            db.settingsDao().setSettings(
+                listOf(
+                    Setting(
+                        key = SettingConstants.KEY_STATION,
+                        value = "Any Station"
+                    ),
+                    Setting(
+                        key = SettingConstants.KEY_LANGUAGE,
+                        value = "Burmese"
+                    )
+                )
+            )
+        }
         inputStream.use {
             XSSFWorkbook(it).use { workbook ->
                 db.stationDao().deleteAll()
@@ -71,6 +88,14 @@ class PersistStationsDbServiceImpl(
                 }
             }
         }
+        db.settingsDao().setSettings(
+            listOf(
+                Setting(
+                    key = SettingConstants.KEY_LAST_UPDATED,
+                    value = Instant.now().toEpochMilli().toString()
+                )
+            )
+        )
         emit(PersistState.Success)
     }.flowOn(scope)
 }

@@ -26,9 +26,12 @@ import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCase
 import com.minthuya.sw.domain.usecase.GetSWLanguagesUseCaseImpl
 import com.minthuya.sw.domain.usecase.GetSWStationsUseCase
 import com.minthuya.sw.domain.usecase.GetSWStationsUseCaseImpl
+import com.minthuya.sw.domain.usecase.SettingsUseCase
+import com.minthuya.sw.domain.usecase.SettingsUseCaseImpl
 import com.minthuya.sw.navigator.SWInternalNavigator
 import com.minthuya.sw.navigator.SWInternalNavigatorImpl
 import com.minthuya.sw.ui.list.StationsListViewModel
+import com.minthuya.sw.ui.setting.SettingsViewModel
 import com.minthuya.sw.ui.sync.SyncStationsViewModel
 import dagger.Module
 import dagger.Provides
@@ -133,6 +136,13 @@ object SWModule {
 
     @Provides
     @FragmentScope
+    fun provideSettingsUseCase(
+        swRepository: SWRepository
+    ): SettingsUseCase =
+        SettingsUseCaseImpl(swRepository)
+
+    @Provides
+    @FragmentScope
     fun provideEntryViewModel(
         viewModelStoreOwner: ViewModelStoreOwner,
         syncStationsService: SyncStationsService
@@ -146,11 +156,25 @@ object SWModule {
     fun provideStationsListViewModel(
         viewModelStoreOwner: ViewModelStoreOwner,
         getSWStationsUseCase: GetSWStationsUseCase,
-        getSWLanguagesUseCase: GetSWLanguagesUseCase
+        getSWLanguagesUseCase: GetSWLanguagesUseCase,
+        settingsUseCase: SettingsUseCase
     ): StationsListViewModel =
         StationsListViewModel(
             getSWStationsUseCase,
-            getSWLanguagesUseCase
+            getSWLanguagesUseCase,
+            settingsUseCase
+        ).getViewModel(viewModelStoreOwner)
+
+    @Provides
+    @FragmentScope
+    fun provideSettingsViewModel(
+        viewModelStoreOwner: ViewModelStoreOwner,
+        getSWLanguagesUseCase: GetSWLanguagesUseCase,
+        settingsUseCase: SettingsUseCase
+    ): SettingsViewModel =
+        SettingsViewModel(
+            getSWLanguagesUseCase,
+            settingsUseCase
         ).getViewModel(viewModelStoreOwner)
 
     @Provides

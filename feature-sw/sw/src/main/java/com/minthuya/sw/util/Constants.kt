@@ -17,3 +17,9 @@ object Constants {
 object FileConstants {
     const val NXA24_XLSX = "nxa24.xlsx"
 }
+
+object SettingConstants {
+    const val KEY_STATION = "key_station"
+    const val KEY_LANGUAGE = "key_language"
+    const val KEY_LAST_UPDATED = "key_last_updated"
+}

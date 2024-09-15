@@ -113,5 +113,7 @@
         <item>WWVH</item>
         <item>XingXing</item>
     </string-array>
-    <string name="sw_app_settings">Settings\n</string>
+    <string name="sw_app_settings">Settings</string>
+    <string name="sw_app_title">Short Wave Frequencies</string>
+    <string name="sw_database_last_updated">Database last updated on %s</string>
 </resources>
